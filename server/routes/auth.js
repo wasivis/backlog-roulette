@@ -12,7 +12,12 @@ router.get('/steam/return',
   (req, res) => {
     // Send the steamId back to the frontend via a URL parameter
     const steamId = req.user.id;
-    res.redirect(`http://localhost:5173?steamId=${steamId}`);
+    
+    // Use the environment variable, falling back to localhost if not found
+    const redirectUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    
+    console.log(`Redirecting user to: ${redirectUrl}`);
+    res.redirect(`${redirectUrl}?steamId=${steamId}`);
   }
 );
 
